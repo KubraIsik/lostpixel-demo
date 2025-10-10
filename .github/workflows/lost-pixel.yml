@@ -1,0 +1,51 @@
+name: lost-pixel
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  vrt:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write        # baseline branch'e yazmak için
+      pull-requests: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install deps
+        run: |
+          if [ -f package-lock.json ]; then npm ci; else npm i; fi
+
+      # Storybook'u build et
+      - name: Build Storybook
+        run: npm run build:sb
+
+      # Statik SB'yi 6006'da servis et
+      - name: Serve Storybook
+        run: npm run serve:sb &
+      
+      # Sunucu ayağa kalkana kadar bekle
+      - name: Wait for Storybook
+        run: npx wait-on http://localhost:6006
+
+      # Lost Pixel'i çalıştır
+      - name: Run Lost Pixel
+        run: npx lost-pixel
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # (Opsiyonel) diff raporlarını artifact olarak yükle
+      - name: Upload Lost Pixel Report
+        if: always() && hashFiles('lost-pixel-report/**') != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: lost-pixel-report
+          path: lost-pixel-report

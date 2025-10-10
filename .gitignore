@@ -22,3 +22,21 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+*storybook.log
+storybook-static
+
+# Lost Pixel
+lost-pixel-report/
+lost-pixel-report.json
+lost-pixel-report.html
+
+# OS generated files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# IDE
+.vscode/settings.json
+.vscode/launch.json
+.vscode/tasks.json
