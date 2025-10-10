@@ -25,24 +25,30 @@ jobs:
         run: |
           if [ -f package-lock.json ]; then npm ci; else npm i; fi
 
-      # ✅ Playwright browser'larını kur (şu an eksik olan adım)
-      - name: Install Playwright browsers
-        run: npx playwright install --with-deps
+      # ✅ Playwright'ı ve tarayıcılarını (chromium dâhil) yükle
+      - name: Setup Playwright (browsers & deps)
+        uses: microsoft/playwright-github-action@v1
+        with:
+          with-deps: true
 
+      # Storybook'u build et
       - name: Build Storybook
         run: npm run build:sb
 
+      # Statik Storybook'u 6006'da servis et
       - name: Serve Storybook
         run: npm run serve:sb &
 
       - name: Wait for Storybook
         run: npx wait-on http://localhost:6006
 
+      # Lost Pixel'i çalıştır
       - name: Run Lost Pixel
         run: npx lost-pixel
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      # (İsteğe bağlı) raporları artefact olarak yükle
       - name: Upload Lost Pixel Report
         if: always() && hashFiles('lost-pixel-report/**') != ''
         uses: actions/upload-artifact@v4
