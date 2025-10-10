@@ -1,11 +1,10 @@
-// lostpixel.config.ts
-import type { CustomProjectConfig } from 'lost-pixel';
+import { CustomProjectConfig } from 'lost-pixel';
 
-const config: CustomProjectConfig = {
-  storybookShots: {
-    storybookUrl: 'http://localhost:6006',
-  },
-  generateOnly: true,
-};
-
-export default config;
+    export const config: CustomProjectConfig = {
+      pageShots: {
+      pages: [ { path: '/', name: 'landing' } ],
+      baseUrl: 'http://172.17.0.1:3000',
+    },
+      lostPixelProjectId: 'cmgl0r6fm0ridp2d24vpuharm',
+      apiKey: process.env.LOST_PIXEL_API_KEY,
+    };
