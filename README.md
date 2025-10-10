@@ -1,73 +1,43 @@
-# React + TypeScript + Vite
+# Lost Pixel Demo Project
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Bu proje, Lost Pixel ile visual regression testing yapmak için oluşturulmuş bir demo projesidir.
 
-Currently, two official plugins are available:
+## 🚀 Özellikler
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **React + TypeScript + Vite** - Modern frontend stack
+- **Storybook** - Component development ve documentation
+- **Lost Pixel** - Visual regression testing
+- **GitHub Actions** - CI/CD pipeline
 
-## React Compiler
+## 📦 Kurulum
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```bash
+# Bağımlılıkları yükle
+npm install
 
-## Expanding the ESLint configuration
+# Storybook'u başlat
+npm run storybook
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# Lost Pixel testlerini çalıştır
+npx lost-pixel
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🧪 Testing
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Bu proje Lost Pixel kullanarak visual regression testing yapar:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+1. Storybook build edilir
+2. Lost Pixel her story için screenshot alır
+3. Baseline ile karşılaştırma yapılır
+4. Farklılıklar raporlanır
+
+## 🔧 Konfigürasyon
+
+- `lostpixel.config.ts` - Lost Pixel konfigürasyonu
+- `.github/workflows/lost-pixel.yml` - GitHub Actions workflow
+- `.storybook/` - Storybook konfigürasyonu
+
+## 📚 Daha Fazla Bilgi
+
+- [Lost Pixel Documentation](https://docs.lost-pixel.com/)
+- [Storybook Documentation](https://storybook.js.org/docs)
