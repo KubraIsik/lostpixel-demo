@@ -8,7 +8,7 @@ jobs:
   vrt:
     runs-on: ubuntu-latest
     permissions:
-      contents: write        # baseline branch'e yazmak için
+      contents: write
       pull-requests: write
     steps:
       - name: Checkout
@@ -24,28 +24,24 @@ jobs:
         run: |
           if [ -f package-lock.json ]; then npm ci; else npm i; fi
 
-      - name: Install Playwright browsers
-        run: npx playwright install chromium
-
-      # Storybook'u build et
       - name: Build Storybook
         run: npm run build:sb
 
-      # Statik SB'yi 6006'da servis et
       - name: Serve Storybook
         run: npm run serve:sb &
-      
-      # Sunucu ayağa kalkana kadar bekle
+
       - name: Wait for Storybook
         run: npx wait-on http://localhost:6006
 
-      # Lost Pixel'i çalıştır
+      # 🔧 Playwright tarayıcılarını yükle (CI için şart)
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps
+
       - name: Run Lost Pixel
         run: npx lost-pixel
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # (Opsiyonel) diff raporlarını artifact olarak yükle
       - name: Upload Lost Pixel Report
         if: always() && hashFiles('lost-pixel-report/**') != ''
         uses: actions/upload-artifact@v4
