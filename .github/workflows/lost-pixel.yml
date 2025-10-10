@@ -10,6 +10,7 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -20,9 +21,13 @@ jobs:
           node-version: 20
           cache: npm
 
-      - name: Install deps
+      - name: Install dependencies
         run: |
           if [ -f package-lock.json ]; then npm ci; else npm i; fi
+
+      # ✅ Playwright browser'larını kur (şu an eksik olan adım)
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps
 
       - name: Build Storybook
         run: npm run build:sb
@@ -32,10 +37,6 @@ jobs:
 
       - name: Wait for Storybook
         run: npx wait-on http://localhost:6006
-
-      # 🔧 Playwright tarayıcılarını yükle (CI için şart)
-      - name: Install Playwright browsers
-        run: npx playwright install --with-deps
 
       - name: Run Lost Pixel
         run: npx lost-pixel
