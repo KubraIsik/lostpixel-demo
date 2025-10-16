@@ -16,16 +16,20 @@ function App() {
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
-      <h1 style={{ color: '#ff6b6b' }}>Vite + React</h1>
+      <h1 style={{ color: '#ff6b6b', fontSize: '3rem', textShadow: '2px 2px 4px rgba(0,0,0,0.3)' }}>Vite + React</h1>
       <div className="card">
         <button 
           onClick={() => setCount((count) => count + 1)}
           style={{ 
-            backgroundColor: '#4ecdc4', 
+            backgroundColor: '#ff6b6b', 
             color: 'white',
             border: 'none',
-            padding: '10px 20px',
-            borderRadius: '5px'
+            padding: '15px 30px',
+            borderRadius: '25px',
+            fontSize: '1.2rem',
+            fontWeight: 'bold',
+            boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
+            transition: 'all 0.3s ease'
           }}
         >
           count is {count}
